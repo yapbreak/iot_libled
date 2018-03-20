@@ -1,3 +1,6 @@
+[![pipeline status](https://gitlab.yapbreak.fr/iot/libled/badges/master/pipeline.svg)](https://gitlab.yapbreak.fr/iot/libled/commits/master)
+[![coverage report](https://gitlab.yapbreak.fr/iot/libled/badges/master/coverage.svg)](https://gitlab.yapbreak.fr/iot/libled/commits/master)
+
 This is a simple led manager for any embedded board that supports Arduino
 framework.
 
