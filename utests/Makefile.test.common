@@ -2,13 +2,9 @@ include $(top_srcdir)/Makefile.common
 
 TEST_ROOT = $(top_srcdir)/utests
 
-LEAK_FLAGS = -include CppUTest/MemoryLeakDetectorNewMacros.h
-
 TESTCFLAGS = $(AM_CFLAGS)\
-			 $(CPPUTEST_CFLAGS)\
-			 $(LEAK_FLAGS)
+			 $(CPPUTEST_CFLAGS)
 TESTCXXFLAGS = $(AM_CXXFLAGS)\
-			   $(CPPUTEST_CFLAGS)\
-			   $(LEAK_FLAGS)
+			   $(CPPUTEST_CFLAGS)
 
 TESTLDFLAGS = $(AM_LDFLAGS) $(CPPUTEST_LIBS)

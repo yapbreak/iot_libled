@@ -7,6 +7,7 @@ led_t::led_t(const uint8_t pin, bool dimable)
     , m_set(dimable ? static_cast<wiring_set_t>(analogWrite) : digitalWrite)
 {
     pinMode(m_pin, OUTPUT);
+    off();
 }
 
 led_t::~led_t()

@@ -25,7 +25,7 @@ class led_t {
         const uint8_t m_pin;
         const wiring_set_t m_set;
         bool m_on = false;
-        uint8_t m_intensity = 0;
+        uint8_t m_intensity = 0xff;
 
 
     public:
