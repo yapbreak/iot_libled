@@ -1,3 +1,7 @@
+/**
+ * @file led.cpp
+ * @brief LED interface implementation using Arduino framework.
+ */
 #include "Arduino.h"
 
 #include "led.h"

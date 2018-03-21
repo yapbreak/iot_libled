@@ -1,3 +1,14 @@
+/**
+ * @file led.h
+ * @author Adrien Oliva <olivaa+gitlab@yapbreak.fr>
+ * @date 2018-03-21
+ * @brief Main classes definitions.
+ *
+ * @section main API description and purpose
+ *
+ * @subsection ex_blinker Simple Blinker Sample
+ * @snippet simple.cpp Blinker
+ */
 /*         DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
  *                Version 2, December 2004
  *
@@ -13,6 +24,7 @@
  * 0. You just DO WHAT THE FUCK YOU WANT TO.
  *
  */
+
 #ifndef __LED_H__
 #define __LED_H__
 
