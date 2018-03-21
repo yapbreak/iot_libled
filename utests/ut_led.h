@@ -75,6 +75,7 @@ TEST(simple_led, default_off)
 TEST(simple_led, turn_on)
 {
     led_t l(1);
+    f.set_expected_pin_mode(1, OUTPUT);
     f.set_expected_analog_value(1, UNDEFINED);
     f.set_expected_digital_value(1, 0xff);
     f.set_expected_call("analogWrite", 0);
@@ -86,6 +87,7 @@ TEST(simple_led, turn_on)
 TEST(simple_led, toggle)
 {
     led_t l(1);
+    f.set_expected_pin_mode(1, OUTPUT);
     f.set_expected_analog_value(1, UNDEFINED);
     f.set_expected_digital_value(1, 0);
     f.check();
@@ -106,6 +108,7 @@ TEST(simple_led, dimable_intensity_change)
 {
     led_t l(6, true);
 
+    f.set_expected_pin_mode(6, OUTPUT);
     f.set_expected_analog_value(6, 0);
     f.set_expected_digital_value(6, UNDEFINED);
     f.check();

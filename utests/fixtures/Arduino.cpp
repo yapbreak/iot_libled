@@ -1,6 +1,7 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include <iomanip>
 #include "Arduino.h"
 #include <CppUTest/TestHarness.h>
 
@@ -174,5 +175,32 @@ void fixtures::check() const
     // Pin state check
     for (auto it = m_expected_led_map.begin();
             it != m_expected_led_map.end(); it++) {
+        const led_attribute_t &expected_attribute = it->second;
+        led_attribute_t actual_attribute;
+
+        try {
+            actual_attribute = m_actual_led_map.at(it->first);
+        } catch (std::out_of_range) {
+            if (expected_attribute.mode != NOTSET) {
+                std::stringstream ss;
+                ss << "Pin " << static_cast<int>(it->first);
+                ss << " not set at all";
+                FAIL(ss.str().c_str());
+            }
+        }
+
+        std::stringstream expected;
+        expected << "#" << static_cast<int>(it->first);
+        expected << ":m(" << expected_attribute.mode << "):";
+        expected << "d(" << std::hex << expected_attribute.digital_value << "):";
+        expected << "a(" << std::hex <<expected_attribute.analog_value << ")";
+
+        std::stringstream actual;
+        actual << "#" << static_cast<int>(it->first);
+        actual << ":m(" << actual_attribute.mode << "):";
+        actual << "d(" << std::hex << actual_attribute.digital_value << "):";
+        actual << "a(" << std::hex << actual_attribute.analog_value << ")";
+
+        STRCMP_EQUAL(expected.str().c_str(), actual.str().c_str());
     }
 }

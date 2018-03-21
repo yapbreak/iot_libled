@@ -15,8 +15,9 @@
 void analogWrite(uint8_t pin, uint8_t value);
 void digitalWrite(uint8_t pin, uint8_t value);
 
-#define OUTPUT (43)
-#define INPUT  (42)
+#define OUTPUT ('O')
+#define INPUT  ('I')
+#define NOTSET ('X')
 #define UNDEFINED (0xffff)
 void pinMode(uint8_t pin, uint8_t mode);
 
@@ -29,8 +30,14 @@ void pinMode(uint8_t pin, uint8_t mode);
 struct led_attribute_t
 {
     uint8_t mode;
-    uint8_t digital_value;
-    uint8_t analog_value;
+    uint16_t digital_value;
+    uint16_t analog_value;
+
+    led_attribute_t()
+        : mode(NOTSET)
+        , digital_value(UNDEFINED)
+        , analog_value(UNDEFINED)
+    {}
 };
 
 class fixtures

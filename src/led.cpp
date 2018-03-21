@@ -84,7 +84,7 @@ void led_rgb_t::toggle()
 
 void led_rgb_t::set_color(uint32_t color, bool silent)
 {
-    m_red.set_intensity((color >> 12) & 0xff, silent);
+    m_red.set_intensity((color >> 16) & 0xff, silent);
     m_green.set_intensity((color >> 8) & 0xff, silent);
     m_blue.set_intensity((color >> 0) & 0xff, silent);
 }
