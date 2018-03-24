@@ -25,6 +25,12 @@
  *
  */
 
+/**
+ * @mainpage LibLed
+ *
+ * This is a small IOT library to easily handle various LEDs.
+ */
+
 #ifndef __LED_H__
 #define __LED_H__
 
@@ -38,7 +44,7 @@
 typedef void (*wiring_set_t)(uint8_t, uint8_t);
 
 /**
-* @brief Abstract a simple Led, dimable or not.
+* @brief Abstract a simple LED, dimable or not.
 *
 * This is the main LED interface. Given a GPIO pin, you can control through
 * this API a simple On/Off LED or a dimable LED with 256 different levels.
@@ -124,20 +130,90 @@ class led_t {
         bool is_on() const;
 };
 
+/**
+ * @brief Abstract a RGB LED, dimable or not.
+ *
+ * This is a facility to manipulate RGB LED, and aggregate 3 simple LEDs.
+ * Given 3 GPIO pin (one for each Red, Green and Blue component), you can
+ * control through this API:
+ *      \li On/Off of every RGB LED
+ *      \li Up to 7 colors with simple RGB LED
+ *      \li Up to 16M colors with dimable RGB LED
+ */
 class led_rgb_t {
     private:
+        /**
+         * @brief Control Red componant of RGB LED.
+         */
         led_t m_red;
+        /**
+         * @brief Control Green componant of RGB LED.
+         */
         led_t m_green;
+        /**
+         * @brief Control Blue componant of RGB LED.
+         */
         led_t m_blue;
 
     public:
+        /**
+        * @brief Main RGB LED constructor.
+        *
+        * @param red_pin GPIO connected to the Red component of RGB LED
+        *                controlled by this interface.
+        * @param green_pin GPIO connected to the Green component of RGB LED
+        *                  controlled by this interface.
+        * @param blue_pin GPIO connected to the Blue component of RGB LED
+        *                 controlled by this interface.
+        * @param dimable Flag to define if the given LED is dimable or not.
+        *
+        * By default, a LED is switched off upon creation, and color is
+        * set to bright white (i.e. \#FFFFFF).
+        */
         led_rgb_t(const uint8_t red_pin, const uint8_t green_pin, const uint8_t blue_pin, bool dimable = false);
+        /**
+        * @brief Default destructor.
+        */
         ~led_rgb_t();
 
+        /**
+        * @brief Switch on controlled LED.
+        *
+        * Use the color stored in object instance.
+        */
         void on();
+        /**
+        * @brief Switch off controlled LED.
+        *
+        * Color is stored inside object instance to be resumed at
+        * same level when LED needs to be switched on again.
+        */
         void off();
+        /**
+        * @brief Toggle LED status.
+        *
+        * A simple way to switch on or off controlled LED. Just call `on` or
+        * `off` method depending on current LED's state.
+        */
         void toggle();
+        /**
+         * @brief Register a now color.
+         *
+         * @param color New color to set under its hexadecimal representation.
+         * @param silent  Flag to tell if new color must be immediately applied.
+         *
+         * For a dimable RGB LED, all value from 0x000000 to 0xffffff could be
+         * valid (depending on hardware capabilities). For a non-dimable RGB
+         * LED, as soon as a color componant is non NULL, corresponding
+         * component is switched on. This means that color \#01bc00 will be
+         * rendered as \#ffff00.
+         */
         void set_color(uint32_t color, bool silent = false);
+        /**
+        * @brief Get logical On/Off LED state.
+        *
+        * @return On/Off LED state.
+        */
         bool is_on() const;
 };
 

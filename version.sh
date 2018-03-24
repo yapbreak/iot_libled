@@ -2,6 +2,8 @@
 
 PKGNAME="libled"
 REPORT="yapbreak+libcomserial@yapbreak.fr"
+TARNAME="$PKGNAME"
+URL="https://gitlab.yapbreak.fr/iot/libled"
 
 if [ "x$1" = "x" ]; then
     gittag=$(git describe --tags --always)
@@ -30,7 +32,7 @@ fi
 echo "Prepare $PKGNAME version $(( current - age )).${age}.${revision}"
 
 cp configure.pre configure.ac
-sed -i "s|AC_INIT(.*)|AC_INIT([${PKGNAME}], [${gittag}], [${REPORT}])|" configure.ac
+sed -i "s|AC_INIT(.*)|AC_INIT([${PKGNAME}], [${gittag}], [${REPORT}], [${TARNAME}], [${URL}])|" configure.ac
 sed -i "s|___CURRENT___|$current|g" configure.ac
 sed -i "s|___REVISION___|$revision|g" configure.ac
 sed -i "s|___AGE___|$age|g" configure.ac

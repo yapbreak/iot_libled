@@ -93,5 +93,5 @@ cpputest*.xml
 build/
 
 # Doxygen
-doc/output
+doc/html
 doc/Doxyfile
