@@ -56,8 +56,7 @@ endif # LCOV
 if GCOVR
 
 gcovr-coverage-report:
-	gcovr -r . --exclude-directories="utests" --xml -o "coverage-report.xml"
-
+	gcovr -r . --exclude-unreachable-branches --exclude-directories="utests" --xml -o "coverage-report.xml"
 else # GCOVR
 
 gcovr-coverage-report:
