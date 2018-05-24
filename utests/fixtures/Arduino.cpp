@@ -104,7 +104,7 @@ void fixtures::call(const char *function)
     int count;
     try {
         count = m_actual_function_call_map.at(function);
-    } catch (std::out_of_range) {
+    } catch (std::out_of_range &) {
         count = 0;
     }
 
@@ -155,7 +155,7 @@ void fixtures::check() const
         int actual_count;
         try {
             actual_count = m_actual_function_call_map.at(it->first);
-        } catch (std::out_of_range) {
+        } catch (std::out_of_range &) {
             if (expected_count != 0) {
                 std::stringstream ss;
                 ss << "No call to " << it->first;
@@ -180,7 +180,7 @@ void fixtures::check() const
 
         try {
             actual_attribute = m_actual_led_map.at(it->first);
-        } catch (std::out_of_range) {
+        } catch (std::out_of_range &) {
             if (expected_attribute.mode != NOTSET) {
                 std::stringstream ss;
                 ss << "Pin " << static_cast<int>(it->first);
