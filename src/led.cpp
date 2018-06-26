@@ -2,14 +2,18 @@
  * @file led.cpp
  * @brief LED interface implementation using Arduino framework.
  */
-#include "Arduino.h"
+
+#ifndef SIMULATE
+#include <Arduino.h>
+#else
+#include "simulate.h"
+#endif
 
 #include "led.h"
 
 led_t::led_t(const uint8_t pin, bool dimable)
     : m_pin(pin)
-    , m_set(dimable ? reinterpret_cast<wiring_set_t>(analogWrite)
-                    : reinterpret_cast<wiring_set_t>(digitalWrite))
+    , m_dimable(dimable)
 {
     pinMode(m_pin, OUTPUT);
     off();
@@ -21,13 +25,19 @@ led_t::~led_t()
 
 void led_t::on()
 {
-    m_set(m_pin, m_intensity);
+    if (m_dimable)
+        analogWrite(m_pin, m_intensity);
+    else
+        digitalWrite(m_pin, m_intensity == 0 ? LOW : HIGH);
     m_on = true;
 }
 
 void led_t::off()
 {
-    m_set(m_pin, 0);
+    if (m_dimable)
+        analogWrite(m_pin, 0);
+    else
+        digitalWrite(m_pin, LOW);
     m_on = false;
 }
 

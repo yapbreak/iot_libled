@@ -15,7 +15,7 @@ void fixtures::registerInstance(fixtures &f)
     s_fixtures = &f;
 }
 
-void analogWrite(uint8_t pin, uint8_t value)
+extern "C" void analogWrite(uint8_t pin, uint8_t value)
 {
     fixtures *f = fixtures::getInstance();
     BYTES_EQUAL(OUTPUT, f->get_actual_pin_mode(pin));
@@ -23,7 +23,7 @@ void analogWrite(uint8_t pin, uint8_t value)
     f->set_actual_analog_value(pin, value);
     f->call("analogWrite");
 }
-void digitalWrite(uint8_t pin, uint8_t value)
+extern "C" void digitalWrite(uint8_t pin, uint8_t value)
 {
     fixtures *f = fixtures::getInstance();
     BYTES_EQUAL(OUTPUT, f->get_actual_pin_mode(pin));
@@ -32,7 +32,30 @@ void digitalWrite(uint8_t pin, uint8_t value)
     f->call("digitalWrite");
 }
 
-void pinMode(uint8_t pin, uint8_t mode)
+extern "C" int digitalRead(uint8_t pin)
+{
+    fixtures *f = fixtures::getInstance();
+    BYTES_EQUAL(INPUT, f->get_actual_pin_mode(pin));
+
+    f->call("digitalRead");
+    return f->get_actual_digital_value(pin);
+}
+
+extern "C" unsigned long millis()
+{
+    fixtures *f = fixtures::getInstance();
+
+    return static_cast<uint32_t>(f->get_millis());
+}
+
+extern "C" unsigned long micros()
+{
+    fixtures *f = fixtures::getInstance();
+
+    return static_cast<uint32_t>(f->get_micros());
+}
+
+extern "C" void pinMode(uint8_t pin, uint8_t mode)
 {
     fixtures *f = fixtures::getInstance();
 
@@ -43,10 +66,11 @@ void pinMode(uint8_t pin, uint8_t mode)
 }
 
 fixtures::fixtures()
-    : m_expected_led_map()
-    , m_actual_led_map()
+    : m_expected_pin_map()
+    , m_actual_pin_map()
     , m_expected_function_call_map()
     , m_actual_function_call_map()
+    , m_micros(0)
 {
 }
 
@@ -66,32 +90,32 @@ int fixtures::get_expected_call(const char *function) const
 
 void fixtures::set_expected_pin_mode(uint8_t pin, uint8_t mode)
 {
-    m_expected_led_map[pin].mode = mode;
+    m_expected_pin_map[pin].mode = mode;
 }
 
 uint8_t fixtures::get_expected_pin_mode(uint8_t pin) const
 {
-    return m_expected_led_map.at(pin).mode;
+    return m_expected_pin_map.at(pin).mode;
 }
 
 void fixtures::set_expected_digital_value(uint8_t pin, uint16_t level)
 {
-    m_expected_led_map[pin].digital_value = level;
+    m_expected_pin_map[pin].digital_value = level;
 }
 
 uint8_t fixtures::get_expected_digital_value(uint8_t pin) const
 {
-    return m_expected_led_map.at(pin).digital_value;
+    return m_expected_pin_map.at(pin).digital_value;
 }
 
 void fixtures::set_expected_analog_value(uint8_t pin, uint16_t value)
 {
-    m_expected_led_map[pin].analog_value = value;
+    m_expected_pin_map[pin].analog_value = value;
 }
 
 uint8_t fixtures::get_expected_analog_value(uint8_t pin) const
 {
-    return m_expected_led_map.at(pin).analog_value;
+    return m_expected_pin_map.at(pin).analog_value;
 }
 
 void fixtures::set_actual_call(const char *function, int count)
@@ -118,32 +142,52 @@ int fixtures::get_actual_call(const char *function) const
 
 void fixtures::set_actual_pin_mode(uint8_t pin, uint8_t mode)
 {
-    m_actual_led_map[pin].mode = mode;
+    m_actual_pin_map[pin].mode = mode;
 }
 
 uint8_t fixtures::get_actual_pin_mode(uint8_t pin) const
 {
-    return m_actual_led_map.at(pin).mode;
+    return m_actual_pin_map.at(pin).mode;
 }
 
 void fixtures::set_actual_digital_value(uint8_t pin, uint16_t level)
 {
-    m_actual_led_map[pin].digital_value = level;
+    m_actual_pin_map[pin].digital_value = level;
 }
 
 uint8_t fixtures::get_actual_digital_value(uint8_t pin) const
 {
-    return m_actual_led_map.at(pin).digital_value;
+    return m_actual_pin_map.at(pin).digital_value;
 }
 
 void fixtures::set_actual_analog_value(uint8_t pin, uint16_t value)
 {
-    m_actual_led_map[pin].analog_value = value;
+    m_actual_pin_map[pin].analog_value = value;
 }
 
 uint8_t fixtures::get_actual_analog_value(uint8_t pin) const
 {
-    return m_actual_led_map.at(pin).analog_value;
+    return m_actual_pin_map.at(pin).analog_value;
+}
+
+void fixtures::set_micros(uint64_t us)
+{
+    m_micros = us;
+}
+
+void fixtures::set_millis(uint64_t ms)
+{
+    m_micros = ms * 1000;
+}
+
+unsigned long fixtures::get_micros() const
+{
+    return m_micros;
+}
+
+unsigned long fixtures::get_millis() const
+{
+    return m_micros / 1000;
 }
 
 void fixtures::check() const
@@ -173,13 +217,13 @@ void fixtures::check() const
     }
 
     // Pin state check
-    for (auto it = m_expected_led_map.begin();
-            it != m_expected_led_map.end(); it++) {
-        const led_attribute_t &expected_attribute = it->second;
-        led_attribute_t actual_attribute;
+    for (auto it = m_expected_pin_map.begin();
+            it != m_expected_pin_map.end(); it++) {
+        const pin_attribute_t &expected_attribute = it->second;
+        pin_attribute_t actual_attribute;
 
         try {
-            actual_attribute = m_actual_led_map.at(it->first);
+            actual_attribute = m_actual_pin_map.at(it->first);
         } catch (std::out_of_range &) {
             if (expected_attribute.mode != NOTSET) {
                 std::stringstream ss;

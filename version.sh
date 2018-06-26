@@ -1,7 +1,7 @@
 #!/bin/sh
 
 PKGNAME="libled"
-REPORT="yapbreak+libcomserial@yapbreak.fr"
+REPORT="yapbreak+gitlab@yapbreak.fr"
 TARNAME="$PKGNAME"
 URL="https://gitlab.yapbreak.fr/iot/libled"
 

@@ -33,9 +33,9 @@ TEST(simple_rgb, creation)
     f.set_expected_analog_value(1, UNDEFINED);
     f.set_expected_analog_value(2, UNDEFINED);
     f.set_expected_analog_value(3, UNDEFINED);
-    f.set_expected_digital_value(1, 0);
-    f.set_expected_digital_value(2, 0);
-    f.set_expected_digital_value(3, 0);
+    f.set_expected_digital_value(1, LOW);
+    f.set_expected_digital_value(2, LOW);
+    f.set_expected_digital_value(3, LOW);
 }
 
 TEST(simple_rgb, creation_dimable_other_pin)
@@ -67,9 +67,9 @@ TEST_GROUP(rgb_led)
         f.set_expected_analog_value(1, UNDEFINED);
         f.set_expected_analog_value(2, UNDEFINED);
         f.set_expected_analog_value(3, UNDEFINED);
-        f.set_expected_digital_value(1, 0);
-        f.set_expected_digital_value(2, 0);
-        f.set_expected_digital_value(3, 0);
+        f.set_expected_digital_value(1, LOW);
+        f.set_expected_digital_value(2, LOW);
+        f.set_expected_digital_value(3, LOW);
     }
 
     void teardown()
@@ -92,9 +92,9 @@ TEST(rgb_led, switch_on)
     l->on();
     CHECK(l->is_on());
 
-    f.set_expected_digital_value(1, 0xff);
-    f.set_expected_digital_value(2, 0xff);
-    f.set_expected_digital_value(3, 0xff);
+    f.set_expected_digital_value(1, HIGH);
+    f.set_expected_digital_value(2, HIGH);
+    f.set_expected_digital_value(3, HIGH);
 }
 
 TEST(rgb_led, switch_on_and_off)
@@ -105,9 +105,9 @@ TEST(rgb_led, switch_on_and_off)
     l->off();
     CHECK_FALSE(l->is_on());
 
-    f.set_expected_digital_value(1, 0);
-    f.set_expected_digital_value(2, 0);
-    f.set_expected_digital_value(3, 0);
+    f.set_expected_digital_value(1, LOW);
+    f.set_expected_digital_value(2, LOW);
+    f.set_expected_digital_value(3, LOW);
 }
 
 TEST(rgb_led, toggle)
@@ -115,26 +115,26 @@ TEST(rgb_led, toggle)
     l->toggle();
     CHECK(l->is_on());
 
-    f.set_expected_digital_value(1, 0xff);
-    f.set_expected_digital_value(2, 0xff);
-    f.set_expected_digital_value(3, 0xff);
+    f.set_expected_digital_value(1, HIGH);
+    f.set_expected_digital_value(2, HIGH);
+    f.set_expected_digital_value(3, HIGH);
 
     f.check();
 
     l->toggle();
     CHECK_FALSE(l->is_on());
 
-    f.set_expected_digital_value(1, 0);
-    f.set_expected_digital_value(2, 0);
-    f.set_expected_digital_value(3, 0);
+    f.set_expected_digital_value(1, LOW);
+    f.set_expected_digital_value(2, LOW);
+    f.set_expected_digital_value(3, LOW);
     f.check();
 
     l->toggle();
     CHECK(l->is_on());
 
-    f.set_expected_digital_value(1, 0xff);
-    f.set_expected_digital_value(2, 0xff);
-    f.set_expected_digital_value(3, 0xff);
+    f.set_expected_digital_value(1, HIGH);
+    f.set_expected_digital_value(2, HIGH);
+    f.set_expected_digital_value(3, HIGH);
 }
 
 TEST_GROUP(dimable_rgb_led)

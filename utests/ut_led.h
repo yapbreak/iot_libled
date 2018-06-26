@@ -35,7 +35,7 @@ TEST(simple_led, creation)
     f.set_expected_call("analogWrite", 0);
     f.set_expected_pin_mode(1, OUTPUT);
     f.set_expected_analog_value(1, UNDEFINED);
-    f.set_expected_digital_value(1, 0);
+    f.set_expected_digital_value(1, LOW);
     led_t l(1);
 }
 
@@ -54,7 +54,7 @@ TEST(simple_led, other_pin)
 {
     f.set_expected_pin_mode(2, OUTPUT);
     f.set_expected_analog_value(2, UNDEFINED);
-    f.set_expected_digital_value(2, 0);
+    f.set_expected_digital_value(2, LOW);
     led_t l(2);
 }
 
@@ -77,7 +77,7 @@ TEST(simple_led, turn_on)
     led_t l(1);
     f.set_expected_pin_mode(1, OUTPUT);
     f.set_expected_analog_value(1, UNDEFINED);
-    f.set_expected_digital_value(1, 0xff);
+    f.set_expected_digital_value(1, HIGH);
     f.set_expected_call("analogWrite", 0);
     f.set_expected_call("digitalWrite", 2);
     l.on();
@@ -89,16 +89,16 @@ TEST(simple_led, toggle)
     led_t l(1);
     f.set_expected_pin_mode(1, OUTPUT);
     f.set_expected_analog_value(1, UNDEFINED);
-    f.set_expected_digital_value(1, 0);
+    f.set_expected_digital_value(1, LOW);
     f.check();
 
     l.toggle();
-    f.set_expected_digital_value(1, 0xff);
+    f.set_expected_digital_value(1, HIGH);
     f.check();
     CHECK(l.is_on());
 
     l.toggle();
-    f.set_expected_digital_value(1, 0);
+    f.set_expected_digital_value(1, LOW);
     CHECK_FALSE(l.is_on());
 
     f.set_expected_call("analogWrite", 0);

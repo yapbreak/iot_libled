@@ -77,7 +77,6 @@ endif # GCOVR
 endif # LCOV_COBERTURA
 
 
-
 coverage-clean: lcov-coverage-clean
 
 coverage-report: lcov-coverage-filter genhtml-coverage-report lcov-cobertura-report gcovr-coverage-report
@@ -103,5 +102,25 @@ CLEANFILES = "coverage-report.info" "coverage-report2.info" "coverage-report" "c
 
 clean-local:
 	@rm -rf $(CLEANFILES)
+
+if PLATFORMIO
+
+firmware:
+	@platformio run
+
+upload: firmware
+	@platformio run --target upload
+
+else # PLATFORMIO
+
+firmware:
+	@(echo "Building firmware only allowed if platformio is available")
+
+upload: firmware
+
+endif
+
+ALLPHONY += firmware
+ALLPHONY += upload
 
 .PHONY: $(ALLPHONY)

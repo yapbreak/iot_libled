@@ -37,13 +37,6 @@
 #include <stdint.h>
 
 /**
-* @brief Internal function pointer used to set led level.
-*
-* Use to store eigther `analog_write` or `digital_write` from Arduino framework.
-*/
-typedef void (*wiring_set_t)(uint8_t, uint8_t);
-
-/**
 * @brief Abstract a simple LED, dimable or not.
 *
 * This is the main LED interface. Given a GPIO pin, you can control through
@@ -58,7 +51,7 @@ class led_t {
         /**
         * @brief Internal function use to set GPIO state.
         */
-        const wiring_set_t m_set;
+        const bool m_dimable;
         /**
         * @brief Flag indicate wether LED is terned on or off.
         */
