@@ -29,7 +29,7 @@ fi
                   -I./src \
                   -I./utests/fixtures \
                   --inline-suppr \
-                  -DHAVE_SOCAT=1 \
+                  -DSIMULATE \
                   "${OUTPUT_FLAGS[@]}" \
                   "$@" \
                   src/
