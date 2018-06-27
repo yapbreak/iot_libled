@@ -1,5 +1,9 @@
 # ChangeLog
 
+## 1.1.1
+
+- Reorganize files
+
 ## 1.1.0
 
 - Add support for Arduino UNO board

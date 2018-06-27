@@ -1,12 +1,16 @@
 #ifndef ARDUINO_H_NID3LW9T
 #define ARDUINO_H_NID3LW9T
 
-#ifndef __cplusplus
+#ifdef __cplusplus
+
+#include <map>
+#include <iostream>
+#include <string>
+
 extern "C"
 {
 #endif
 
-#include <CppUTest/TestHarness.h>
 #include <stdint.h>
 
 /* Arduino fixtures */
@@ -14,9 +18,9 @@ extern "C"
 /********************
 *  Arduino wiring  *
 ********************/
-extern "C" void analogWrite(uint8_t pin, uint8_t value);
-extern "C" void digitalWrite(uint8_t pin, uint8_t value);
-extern "C" int digitalRead(uint8_t pin);
+void analogWrite(uint8_t pin, uint8_t value);
+void digitalWrite(uint8_t pin, uint8_t value);
+int digitalRead(uint8_t pin);
 #define LOW 25
 #define HIGH 90
 
@@ -24,20 +28,16 @@ extern "C" int digitalRead(uint8_t pin);
 #define INPUT  ('I')
 #define NOTSET ('X')
 #define UNDEFINED (0xffff)
-extern "C" void pinMode(uint8_t pin, uint8_t mode);
+void pinMode(uint8_t pin, uint8_t mode);
 
 /********************
 *  Arduino timing  *
 ********************/
-extern "C" unsigned long millis();
-extern "C" unsigned long micros();
+unsigned long millis();
+unsigned long micros();
 
-#ifndef __cplusplus
+#ifdef __cplusplus
 };
-#else
-#include <map>
-#include <iostream>
-#include <string>
 
 /*******************
 *  Test fixtures  *

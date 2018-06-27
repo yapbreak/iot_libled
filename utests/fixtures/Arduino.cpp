@@ -15,7 +15,7 @@ void fixtures::registerInstance(fixtures &f)
     s_fixtures = &f;
 }
 
-extern "C" void analogWrite(uint8_t pin, uint8_t value)
+void analogWrite(uint8_t pin, uint8_t value)
 {
     fixtures *f = fixtures::getInstance();
     BYTES_EQUAL(OUTPUT, f->get_actual_pin_mode(pin));
@@ -23,7 +23,8 @@ extern "C" void analogWrite(uint8_t pin, uint8_t value)
     f->set_actual_analog_value(pin, value);
     f->call("analogWrite");
 }
-extern "C" void digitalWrite(uint8_t pin, uint8_t value)
+
+void digitalWrite(uint8_t pin, uint8_t value)
 {
     fixtures *f = fixtures::getInstance();
     BYTES_EQUAL(OUTPUT, f->get_actual_pin_mode(pin));
@@ -32,7 +33,7 @@ extern "C" void digitalWrite(uint8_t pin, uint8_t value)
     f->call("digitalWrite");
 }
 
-extern "C" int digitalRead(uint8_t pin)
+int digitalRead(uint8_t pin)
 {
     fixtures *f = fixtures::getInstance();
     BYTES_EQUAL(INPUT, f->get_actual_pin_mode(pin));
@@ -41,21 +42,21 @@ extern "C" int digitalRead(uint8_t pin)
     return f->get_actual_digital_value(pin);
 }
 
-extern "C" unsigned long millis()
+unsigned long millis()
 {
     fixtures *f = fixtures::getInstance();
 
     return static_cast<uint32_t>(f->get_millis());
 }
 
-extern "C" unsigned long micros()
+unsigned long micros()
 {
     fixtures *f = fixtures::getInstance();
 
     return static_cast<uint32_t>(f->get_micros());
 }
 
-extern "C" void pinMode(uint8_t pin, uint8_t mode)
+void pinMode(uint8_t pin, uint8_t mode)
 {
     fixtures *f = fixtures::getInstance();
 

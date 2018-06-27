@@ -10,7 +10,8 @@ noinst_PROGRAMS = $(TESTS)
 
 check_PROGRAMS = $(TESTS)
 
-ut_led_xtest_SOURCES = ut_led.h
+ut_led_xtest_SOURCES  = ut_led.h
+ut_led_xtest_SOURCES += ut_led_rgb.h
 ut_led_xtest_SOURCES += main.cpp
 ut_led_xtest_CFLAGS = $(TESTCFLAGS)
 ut_led_xtest_CXXFLAGS = $(TESTCXXFLAGS)
