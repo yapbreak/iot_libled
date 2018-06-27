@@ -6,7 +6,7 @@
 #ifndef SIMULATE
 #include <Arduino.h>
 #else
-#include "simulate.h"
+#include "simulation/simulate.h"
 #endif
 
 #include "led.h"

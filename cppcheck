@@ -26,10 +26,11 @@ fi
 
 /usr/bin/cppcheck --enable=all --verbose --quiet \
                   --suppress=missingIncludeSystem \
+                  -I./src/.. \
                   -I./src \
                   -I./utests/fixtures \
                   --inline-suppr \
                   -DSIMULATE \
                   "${OUTPUT_FLAGS[@]}" \
                   "$@" \
-                  src/
+                  src/ simulation/
