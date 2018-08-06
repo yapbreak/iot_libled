@@ -1,10 +1,6 @@
-#if defined(TESTFIRMWARE) || defined(SIMULATE)
+#if defined(TESTFIRMWARE)
 
-#ifndef SIMULATE
 #include <Arduino.h>
-#else
-#include "simulation/simulate.h"
-#endif
 
 #include "led.h"
 

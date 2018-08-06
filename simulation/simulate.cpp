@@ -1,60 +1,34 @@
-#ifdef SIMULATE
-
+#include "Arduino.h"
 #include "led.h"
-#include "simulate.h"
 #include <time.h>
 #include <stdio.h>
 
-extern void setup();
-extern void loop();
+// Create a simple led connected to pin 4
+led_t my_led(4);
+led_rgb_t my_led_rgb(1, 2, 3, true);
+
+/**
+* @brief Arduino function to setup and initialize everything.
+*/
+// cppcheck-suppress unusedFunction
+extern "C" void setup() {
+    my_led.on();
+    my_led_rgb.set_color(0xff6600);
+}
+
+/**
+* @brief Arduino function called in the main loop.
+*/
+// cppcheck-suppress unusedFunction
+extern "C" void loop() {
+    my_led.toggle();
+    my_led_rgb.toggle();
+    delay(1000);
+}
 
 int main(int argc, const char *argv[])
 {
     (void) argc;
     (void) argv;
-
-    setup();
-
-    for (;;)
-        loop();
-
-    return 0;
+    return ardsim_run();
 }
-
-void pinMode(uint8_t pin, uint8_t mode)
-{
-    printf("Set pin#%d to %c\n", pin, mode);
-}
-
-void analogWrite(uint8_t pin, uint8_t value)
-{
-    printf("Write on pin#%d to 0x%x\n", pin, value);
-}
-
-void digitalWrite(uint8_t pin, uint8_t value)
-{
-    switch (value) {
-        case LOW:
-            printf("Write on pin#%d to LOW\n", pin);
-            break;
-        case HIGH:
-            printf("Write on pin#%d to HIGH\n", pin);
-            break;
-        default:
-            printf("Write on pin#%d unexpected value 0x%x\n", pin, value);
-            break;
-    }
-}
-
-void delay(unsigned long ms)
-{
-    struct timespec waiting;
-
-    time_t seconds = ms / 1000;
-    long nanoseconds = (ms % 1000) * 1000;
-    waiting.tv_sec = seconds;
-    waiting.tv_nsec = nanoseconds;
-    nanosleep(&waiting, &waiting);
-}
-
-#endif
