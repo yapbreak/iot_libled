@@ -149,7 +149,7 @@ PKG_CHECK_MODULES([CPPUTEST], [cpputest], [have_cpputest=yes], [have_cpputest=no
 AM_CONDITIONAL([CPPUTEST], [test "x${have_cpputest}" = "xyes"])
 AS_IF([test "x$have_cpputest" = "xno"],
       [AC_MSG_WARN([Please install CppUTest package to get support of unit tests.])])
-PKG_CHECK_MODULES([ARDSIM], [ardsim], [have_ardsim=yes], [have_ardsim=no])
+PKG_CHECK_MODULES([ARDSIM], [ardsim >= 0.0.4], [have_ardsim=yes], [have_ardsim=no])
 AM_CONDITIONAL([ARDSIM], [test "x${have_ardsim}" = "xyes"])
 AS_IF([test "x$have_ardsim" = "xno"],
       [AC_MSG_WARN([Please install Ardsim library from https://gitlab.yapbreak.fr/libraries/libardsim])],
