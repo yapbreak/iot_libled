@@ -14,7 +14,8 @@ led_t my_led(4);
 /**
 * @brief Arduino function to setup and initialize everything.
 */
-void setup() {
+// cppcheck-suppress unusedFunction
+extern "C" void setup() {
     Serial.begin(115200);
     my_led.on();
 }
@@ -22,7 +23,8 @@ void setup() {
 /**
 * @brief Arduino function called in the main loop.
 */
-void loop() {
+// cppcheck-suppress unusedFunction
+extern "C" void loop() {
     my_led.toggle();
     sleep(1000);
 }

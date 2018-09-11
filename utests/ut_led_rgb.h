@@ -223,4 +223,39 @@ TEST(dimable_rgb_led, pure_color_checks)
     f.set_expected_analog_value(3, 0);
 }
 
+TEST(print, simpleledrgb)
+{
+    led_rgb_t l(1, 2, 3);
+    l.printTo(mem);
+    STRCMP_EQUAL("Led RGB {#1, #2, #3} -> #255255255 OFF\n",
+                 mem.getcontent().c_str());
+}
+
+TEST(print, simpleledrgb_othercolor)
+{
+    led_rgb_t l(4, 5, 6);
+    l.set_color(0x12ab30);
+    l.printTo(mem);
+    STRCMP_EQUAL("Led RGB {#4, #5, #6} -> #1817148 ON \n",
+                 mem.getcontent().c_str());
+}
+
+TEST(print, simpleledrgb_dimable)
+{
+    led_rgb_t l(1, 2, 3, true);
+    l.printTo(mem);
+    STRCMP_EQUAL("Led RGB {#1, #2, #3} -> #255255255 OFF [PWM]\n",
+                 mem.getcontent().c_str());
+}
+
+TEST(print, simpleledrgb_othercolor_dimable)
+{
+    led_rgb_t l(4, 5, 6, true);
+    l.set_color(0x12ab30);
+    l.printTo(mem);
+    STRCMP_EQUAL("Led RGB {#4, #5, #6} -> #1817148 ON  [PWM]\n",
+                 mem.getcontent().c_str());
+}
+
+
 #endif /* end of include guard: UT_LED_RGB_H_L6MAWOEO */
