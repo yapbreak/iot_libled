@@ -134,5 +134,75 @@ TEST(simple_led, dimable_intensity_change)
     CHECK(l.is_on());
 }
 
+TEST_GROUP(print)
+{
+    void setup()
+    {
+        fixtures::registerInstance(f);
+    }
+
+    void teardown()
+    {
+        mem.clear();
+    }
+
+    fixtures f;
+    memory mem;
+};
+
+TEST(print, simpleled_default)
+{
+    led_t l(2);
+
+    l.printTo(mem);
+    STRCMP_EQUAL("Led on pin #2 -> 0x255 OFF\n", mem.getcontent().c_str());
+};
+
+TEST(print, simpleled_on)
+{
+    led_t l(2);
+
+    l.on();
+    l.printTo(mem);
+    STRCMP_EQUAL("Led on pin #2 -> 0x255 ON\n", mem.getcontent().c_str());
+};
+
+TEST(print, simpleled_low)
+{
+    led_t l(3);
+
+    l.set_intensity(LOW);
+    l.printTo(mem);
+    STRCMP_EQUAL("Led on pin #3 -> 0x25 ON\n", mem.getcontent().c_str());
+};
+
+TEST(print, simpleled_high)
+{
+    led_t l(4);
+
+    l.set_intensity(HIGH, true);
+    l.printTo(mem);
+    STRCMP_EQUAL("Led on pin #4 -> 0x90 OFF\n", mem.getcontent().c_str());
+};
+
+TEST(print, dimableled)
+{
+    led_t l(8, true);
+
+    l.printTo(mem);
+    l.on();
+    l.printTo(mem);
+    l.set_intensity(20);
+    l.printTo(mem);
+    l.set_intensity(128, false);
+    l.off();
+    l.printTo(mem);
+    STRCMP_EQUAL("Led on pin #8 [PWM] -> 0x255 OFF\n"
+                 "Led on pin #8 [PWM] -> 0x255 ON\n"
+                 "Led on pin #8 [PWM] -> 0x20 ON\n"
+                 "Led on pin #8 [PWM] -> 0x128 OFF\n",
+                 mem.getcontent().c_str());
+};
+
 
 #endif /* end of include guard: UT_LED_H_FXDBES5N */

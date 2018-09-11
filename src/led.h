@@ -35,6 +35,9 @@
 #define __LED_H__
 
 #include <stdint.h>
+#include <Printable.h>
+
+class led_rgb_t;
 
 /**
 * @brief Abstract a simple LED, dimable or not.
@@ -42,8 +45,12 @@
 * This is the main LED interface. Given a GPIO pin, you can control through
 * this API a simple On/Off LED or a dimable LED with 256 different levels.
 */
-class led_t {
-    private:
+class led_t : public Printable {
+        /**
+        * @brief Allow led_rgb_t access to internal state of LED.
+        */
+        friend class led_rgb_t;
+    protected:
         /**
         * @brief A PIN identifier where LED is connected.
         */
@@ -76,7 +83,7 @@ class led_t {
         /**
         * @brief Default destructor.
         */
-        ~led_t();
+        virtual ~led_t();
 
         /**
         * @brief Switch on controlled LED.
@@ -121,6 +128,15 @@ class led_t {
         * @return On/Off LED state.
         */
         bool is_on() const;
+
+        /**
+        * @brief Printable interface implementation
+        *
+        * @param p Print object where human readable LED string will be printed.
+        *
+        * @return Number of bytes written on `p`.
+        */
+        virtual size_t printTo(Print &p) const override;
 };
 
 /**
@@ -133,7 +149,7 @@ class led_t {
  *      \li Up to 7 colors with simple RGB LED
  *      \li Up to 16M colors with dimable RGB LED
  */
-class led_rgb_t {
+class led_rgb_t : public Printable {
     private:
         /**
          * @brief Control Red componant of RGB LED.
@@ -167,7 +183,7 @@ class led_rgb_t {
         /**
         * @brief Default destructor.
         */
-        ~led_rgb_t();
+        virtual ~led_rgb_t();
 
         /**
         * @brief Switch on controlled LED.
@@ -208,6 +224,15 @@ class led_rgb_t {
         * @return On/Off LED state.
         */
         bool is_on() const;
+
+        /**
+        * @brief Printable interface implementation
+        *
+        * @param p Print object where human readable LED string will be printed.
+        *
+        * @return Number of bytes written on `p`.
+        */
+        virtual size_t printTo(Print &p) const override;
 };
 
  #endif

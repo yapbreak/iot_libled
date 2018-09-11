@@ -11,7 +11,7 @@ led_rgb_t my_led_rgb(1, 2, 3, true);
 /**
 * @brief Arduino function to setup and initialize everything.
 */
-void setup() {
+extern "C" void setup() {
     my_led.on();
     my_led_rgb.set_color(0xff6600);
 }
@@ -19,7 +19,7 @@ void setup() {
 /**
 * @brief Arduino function called in the main loop.
 */
-void loop() {
+extern "C" void loop() {
     my_led.toggle();
     my_led_rgb.toggle();
     delay(1000);
