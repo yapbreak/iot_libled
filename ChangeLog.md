@@ -1,13 +1,24 @@
 # ChangeLog
 
 
+## 1.1.3
+
+Print release
+
+2018-09-11	Adrien Oliva <olivaa+gitlab@yapbreak.fr>
+
+	* #    - <footer>: reference to gitlab issue with tag "GTLAB #6" build(release): Prepare release 1.1.3
+	* Merge branch '2-printable-class' into 'master'
+	* GTLAB #2 feat(printable): Implement Printable interface
+
+
 ## 1.1.2
 
 Simulator release
 
 2018-08-07	Adrien Oliva <olivaa+gitlab@yapbreak.fr>
 
-	* #    - <footer>: reference to gitlab issue with tag "GTLAB #6" build(release): Prepare release 1.1.2
+	* build(release): Prepare release 1.1.2
 	* hotfix(pkgconfig): Require minimum ardsim 0.0.4
 
 2018-08-06	Adrien Oliva <olivaa+gitlab@yapbreak.fr>
@@ -45,3 +56,28 @@ PlatformIO release
 
 	* Handle lcov-cobertura to produce jenkins coverage report
 
+
+## 1.0.0
+
+(Lightweight tag)
+
+2018-03-24	Adrien Oliva <olivaa+gitlab@yapbreak.fr>
+
+	* Improve Gcovr coverage report.
+	* Documentation of led_rgb_t class.
+
+2018-03-21	Adrien Oliva <olivaa+gitlab@yapbreak.fr>
+
+	* Add unittest for RGB Led interface.
+	* Add sample in documentation.
+
+2018-03-20	Adrien Oliva <olivaa+gitlab@yapbreak.fr>
+
+	* Documentation of led_t class
+	* Improve README
+	* Unit testing
+	* Unit tests
+
+2018-02-23	Adrien Oliva <olivaa+gitlab@yapbreak.fr>
+
+	* Initial import of LED library.
