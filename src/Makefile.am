@@ -5,6 +5,7 @@ include $(top_srcdir)/Makefile.common
 lib_LTLIBRARIES = libled.la
 libled_la_SOURCES  = led.h
 libled_la_SOURCES += led.cpp
+libled_la_LDFLAGS = $(LIBVERSION)
 
 include_HEADERS = led.h
 libdir = $(prefix)/lib/yapiot/
