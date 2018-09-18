@@ -102,3 +102,5 @@ platformio.ini
 ledtest
 
 library.properties
+library.json
+*.pc

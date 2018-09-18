@@ -3,7 +3,7 @@
 
 #include <CppUTest/TestHarness.h>
 #include "led.h"
-#include "Arduino.h"
+#include "ArduinoFixtures.h"
 
 TEST_GROUP(basic)
 {
@@ -173,7 +173,8 @@ TEST(print, simpleled_low)
 
     l.set_intensity(LOW);
     l.printTo(mem);
-    STRCMP_EQUAL("Led on pin #3 -> 0x25 ON\n", mem.getcontent().c_str());
+    STRCMP_CONTAINS("Led on pin #3 -> 0x", mem.getcontent().c_str());
+    STRCMP_CONTAINS("ON\n", mem.getcontent().c_str());
 };
 
 TEST(print, simpleled_high)
@@ -182,7 +183,8 @@ TEST(print, simpleled_high)
 
     l.set_intensity(HIGH, true);
     l.printTo(mem);
-    STRCMP_EQUAL("Led on pin #4 -> 0x90 OFF\n", mem.getcontent().c_str());
+    STRCMP_CONTAINS("Led on pin #4 -> 0x", mem.getcontent().c_str());
+    STRCMP_CONTAINS("OFF\n", mem.getcontent().c_str());
 };
 
 TEST(print, dimableled)

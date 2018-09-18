@@ -2,7 +2,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 if DOXYGEN
 
-doc:
+doc: img/led.png
 	@(doxygen)
 
 clean-local:
@@ -15,3 +15,5 @@ else
 doc:
 	@(echo "Please install doxygen to get actual documentation")
 endif
+
+dist_data_DATA = img/led.png

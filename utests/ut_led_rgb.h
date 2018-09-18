@@ -3,7 +3,7 @@
 
 #include <CppUTest/TestHarness.h>
 #include "led.h"
-#include "Arduino.h"
+#include "ArduinoFixtures.h"
 
 
 TEST_GROUP(simple_rgb)
