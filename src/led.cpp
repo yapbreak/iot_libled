@@ -105,7 +105,6 @@ void led_rgb_t::toggle()
     m_blue.toggle();
 }
 
-// cppcheck-suppress unusedFunction
 void led_rgb_t::set_color(uint32_t color, bool silent)
 {
     m_red.set_intensity((color >> 16) & 0xff, silent);

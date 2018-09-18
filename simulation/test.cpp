@@ -25,8 +25,12 @@ led_rgb_t my_led_rgb(LED_R, LED_G, LED_B, true);
 * @brief Arduino function to setup and initialize everything.
 */
 extern "C" void setup() {
+    Serial.begin(9600);
     my_led.on();
     my_led_rgb.set_color(0xff6600);
+
+    my_led.printTo(Serial);
+    Serial.println(my_led_rgb);
 }
 
 /**
