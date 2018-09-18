@@ -134,3 +134,5 @@ ALLPHONY += firmware
 ALLPHONY += upload
 
 .PHONY: $(ALLPHONY)
+
+dist_data_DATA = examples/simple.cpp
