@@ -1,8 +1,0 @@
-name=@PACKAGE_NAME@
-version=@PACKAGE_VERSION@
-author=YapBreak
-maintainer=YapBreak <@PACKAGE_BUGREPORT@>
-sentence=Led library for any board Arduino framework compatible.
-paragraph=Simple led library that allow control of LED, RGB Led, dimmable or not.
-category=led
-url=@PACKAGE_URL@
